@@ -28,7 +28,7 @@ def common_options(func):
     return wrapper
 
 def add_event_id_gap(df, *, time_col: str = "timestamp_ms",
-                     threshold_ms: float = 50.0,
+                     threshold_ms: float = 0.001,
                      id_col: str = "event_id"):
     """
     直前レコードとの時間差が threshold を超えたらイベント番号を+1。
@@ -59,7 +59,7 @@ def add_event_id_gap(df, *, time_col: str = "timestamp_ms",
     return out
 
 
-def add_event_id_anchor(df, time_col: str = "t0_ms", threshold_ms: float = 50.0, id_col: str = "event_id"):
+def add_event_id_anchor(df, time_col: str = "t0_ms", threshold_ms: float = 0.001, id_col: str = "event_id"):
 
     df1 = df.withColumn("__rid", F.monotonically_increasing_id())
 
@@ -157,7 +157,7 @@ def main(save, file, dir):
     # v = 32.2 mm/ns, l = 100 mm -> 100 / 32.2 3.1ns -> 2 sample
     # timestamp /  340000. = ms,  1 timestamp=> 0.0000029ms -> 2.9ns 
     # df_ev = add_event_id_anchor(df_aug, time_col="timestamp_ms", threshold_ms=100.0, id_col="event_id")
-    df_ev = add_event_id_gap(df_aug, time_col="timestamp_ms", threshold_ms=5, id_col="event_id")
+    df_ev = add_event_id_gap(df_aug, time_col="timestamp_ms", threshold_ms=0.0000001, id_col="event_id")
 
 
     if save:
@@ -167,6 +167,53 @@ def main(save, file, dir):
             .mode("overwrite")
             .option("compression", "zstd")
             .parquet(output))
+
+
+    if 1:
+        import pandas as pd
+        import plotly.graph_objects as go
+        from plotly.subplots import make_subplots
+        
+        df = pd.read_parquet(output)  # engine は pyarrow が使われる想定
+        
+        _cols = ["timestamp_ms", "event_id"]  # 欲しい列名に変える
+        df2 = df[_cols].copy()
+        
+        fig = make_subplots(
+            rows=1,
+            cols=1,
+            vertical_spacing=0.2,
+            horizontal_spacing=0.15,
+            subplot_titles=["data"],
+        )
+        
+        x = (df2["timestamp_ms"].to_numpy() / 1e3)  # ms -> s
+        y = df2["event_id"].to_numpy()
+        
+        fig.add_trace(
+            go.Scatter(
+                x=x,
+                y=y,
+                mode="markers",
+                marker=dict(size=4),
+                name="data",
+            ),
+            row=1,
+            col=1,
+        )
+        
+        fig.update_xaxes(title_text="timestamp [s]", row=1, col=1)
+        fig.update_yaxes(title_text="event id", row=1, col=1)
+        
+        fig.update_layout(
+            height=400,
+            width=1000,
+            showlegend=False,
+            title_text="scatter plots",
+        )
+        
+        fig.show()
+
 
 if __name__ == '__main__':
     main()

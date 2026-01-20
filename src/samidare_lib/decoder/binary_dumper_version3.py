@@ -900,7 +900,7 @@ def main(limit, plot, maxevt, binary, event, decode, file, dir, save, figsave):
         pau.add_sub_plot(fig,1,2,'1d',[error_level],['Error Status','Counts'], xrange=[0,31,1],logs=[False, True])
         pau.add_sub_plot(fig,2,1,'1d',[max_samples],['Max sample','Counts'], xrange=[0,1024,1],logs=[False, True])
         pau.add_sub_plot(fig,2,2,'1d',[chip],['Chip number','Counts'], xrange=[0,4,1])
-        fig.update_layout(height=950, width=1400, title_text=f"File name:{fileinfo["input_file_name"]}.bin", showlegend=False)
+        fig.update_layout(height=950, width=1400, title_text=f'File name:{fileinfo["input_file_name"]}.bin', showlegend=False)
         if figsave:
             saveutil.save_plotly(fig, base_dir=savebase)
         else:
@@ -912,7 +912,7 @@ def main(limit, plot, maxevt, binary, event, decode, file, dir, save, figsave):
         good  = block_counts_dict[60]
         total = sum(block_counts_dict.values())
 
-        print(f"{fileinfo["input_file_name"]}.bin")
+        print(f'{fileinfo["input_file_name"]}.bin')
         print(f"    good block rate: {good/total*100.}")
 
         evall = error_counts_dict.keys()

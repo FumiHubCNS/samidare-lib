@@ -41,9 +41,7 @@ this_file_path = pathlib.Path(__file__).parent
 sys.path.append(str(this_file_path.parent.parent.parent / "src"))
 
 def common_options(func):
-    @click.option('--name', '-n', default='World', show_default=True, help='Your name')
-    @click.option('--date', '-d', type=click.DateTime(formats=["%Y-%m-%d"]), default=lambda: datetime.datetime.now(), show_default=lambda: datetime.datetime.now().strftime("%Y-%m-%d"), help="Date in YYYY-MM-DD format")
-    @click.option('--verbose', '-v', is_flag=True, help='verbose flag')
+    @click.option('--file', '-f', default='', show_default=True, help='file')
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
     return wrapper
@@ -113,12 +111,7 @@ def add_event_id_anchor(
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @common_options
-def main(name, date, verbose):
-    if verbose:
-        click.echo(f"[VERBOSE MODE] Hello {name}, date: {date.strftime('%Y-%m-%d')}")
-    else:
-        click.echo(f"Hello {name}! (Date: {date.strftime('%Y-%m-%d')})")
-
+def main(file):
 
     toml_file_path = this_file_path  / "../../../parameters.toml"
 
@@ -126,7 +119,12 @@ def main(name, date, verbose):
         config = toml.load(f)
 
     fileinfo = config["fileinfo"]
-    base_path = fileinfo["base_output_path"]  + "/" + fileinfo["input_file_name"] 
+
+    if file is None :
+        base_path = fileinfo["base_output_path"]  + "/" + fileinfo["input_file_name"] 
+    else:
+        base_path = fileinfo["base_output_path"]  + "/" + file
+
     input = base_path + "_pulse.parquet"
     input_finename = os.path.basename(input)
 
@@ -188,7 +186,7 @@ def main(name, date, verbose):
 
         fig = make_subplots(rows=1, cols=1, vertical_spacing=0.15, horizontal_spacing=0.1, subplot_titles=( "test" ))
         pau.add_sub_plot(fig,1,1,'plot',[*data5],['timestamp','max sample'],[100,100], [False,False,False])
-        fig.update_layout( height=800, width=1000, showlegend=False,title_text=f"{input_finename}")
+        fig.update_layout( height=400, width=1000, showlegend=False,title_text=f"{input_finename}")
         fig.show()
 
     df_ev = add_event_id_anchor(df_aug, time_col="t0_ms", threshold_ms=100.0, id_col="event_id")

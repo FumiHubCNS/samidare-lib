@@ -633,12 +633,12 @@ def check_hq(df1=None, df2=None, input_finename="", savebase=None, save_flag=Fal
     data1 = df1.toPandas()
     data2 = df2.toPandas()
     res = fit_line_ols(data1["charge"],data1["maxsample"])
-    print(f"a = {res['slope']:.5f}, b = {res["intercept"]:.5f} (chrage < 4000)")
+    print(f'a = {res["slope"]:.5f}, b = {res["intercept"]:.5f} (chrage < 4000)')
     fitx =  np.linspace(0,4000, 5)
     fity = _pol1(fitx,res['slope'],res["intercept"])
 
 
-    fig = make_subplots(rows=1, cols=2, vertical_spacing=0.15, horizontal_spacing=0.1,subplot_titles=("h x q (raw)",f"h x q (valid), a = {res['slope']:.3f}, b = {res["intercept"]:.3f}",))
+    fig = make_subplots(rows=1, cols=2, vertical_spacing=0.15, horizontal_spacing=0.1,subplot_titles=("h x q (raw)",f"h x q (valid), a = {res['slope']:.3f}, b = {res['intercept']:.3f}",))
     pau.add_sub_plot(fig,1,1,'2d',[data2["charge"],data2["maxsample"]],["Charge [ch]"," Max Sample [ch]"],[500,500],yrange=[0,1100],xrange=[0,6000])
     pau.add_sub_plot(fig,1,2,'2d',[data1["charge"],data1["maxsample"]],["Charge [ch]"," Max Sample [ch]"],[500,500],yrange=[0,1100],xrange=[0,6000])
     pau.add_sub_plot(fig,1,2,'fit',[fitx, fity])
@@ -783,8 +783,8 @@ def check_tpc_position_charge_correction(df, input_finename="", savebase=None, s
 
     fig = make_subplots(rows=1, cols=2, vertical_spacing=0.15, horizontal_spacing=0.1,
         subplot_titles=( 
-            f"upstream tpc total charge (valid), fit result mu: {params1["mu"]:.2f} ", 
-            f"downstream tpc total charge (valid), fit result mu: {params2["mu"]:.2f} "
+            f"upstream tpc total charge (valid), fit result mu: {params1['mu']:.2f} ", 
+            f"downstream tpc total charge (valid), fit result mu: {params2['mu']:.2f} "
         )
     )
 
@@ -800,8 +800,8 @@ def check_tpc_position_charge_correction(df, input_finename="", savebase=None, s
     de1 = (deinfo.dedxinfo["Am241"]["up"]["de[keV]"] + deinfo.dedxinfo["Cm244"]["up"]["de[keV]"] + deinfo.dedxinfo["Np237"]["up"]["de[keV]"]) / 3.0
     de2 = (deinfo.dedxinfo["Am241"]["down"]["de[keV]"] + deinfo.dedxinfo["Cm244"]["down"]["de[keV]"])/ 2.0
 
-    print(f"[debug] de={de1} a={a_val} b={b_val} mu={params1["mu"]}")
-    print(f"[debug] de={de2} a={a_val} b={b_val} mu={params2["mu"]}")
+    print(f"[debug] de={de1} a={a_val} b={b_val} mu={params1['mu']}")
+    print(f"[debug] de={de2} a={a_val} b={b_val} mu={params2['mu']}")
 
     g1 = calculate_energy_gain(params1["mu"], dE=de1, a=a_val, b=b_val)
     g2 = calculate_energy_gain(params2["mu"], dE=de2, a=a_val, b=b_val)
@@ -826,7 +826,7 @@ def check_energy_resolution(df_plot1, input_finename="", savebase=None, save_fla
     fitx = np.linspace(-20,20,400)
     fity = _gauss(fitx, params["A"], params["mu"], params["sigma"])
 
-    fig = make_subplots(rows=2, cols=2, vertical_spacing=0.15, horizontal_spacing=0.1, subplot_titles=(f"Qdif fit sigma :{params["sigma"]}","xg vs slope","xg vs Qdif","slope vs Qdif"))
+    fig = make_subplots(rows=2, cols=2, vertical_spacing=0.15, horizontal_spacing=0.1, subplot_titles=(f"Qdif fit sigma :{params['sigma']}","xg vs slope","xg vs Qdif","slope vs Qdif"))
     pau.add_sub_plot(fig,1,1,'spark-hist',[centers,counts],[r'$\frac{Q_{1}+Q_{3}}{2} - Q_{2} \mathrm{[keV]}$','Counts'],xrange=[100])
     pau.add_sub_plot(fig,1,1,'fit',[fitx, fity])
     pau.add_sub_plot(fig,1,2,'2d',[data["x_ug"], data["slope"]],['wighted x position (upstream) [mm]','slope'],[100,100],[False,False,False],xrange=[-20,20],yrange=[-1,1])

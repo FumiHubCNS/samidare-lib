@@ -242,9 +242,9 @@ def main(name, date, verbose):
         fig = make_subplots(
             rows=1, cols=1, vertical_spacing=0.15, horizontal_spacing=0.1,
             subplot_titles=(
-                f"Pulse height @ chip {chip_id} ch {ch_id},\
+                f'Pulse height @ chip {chip_id} ch {ch_id},\
                 mu: {params1["mu"]:.2f},\
-                sigma: {params1["sigma"]:.2f}, rms: {rms_val:.2f}"
+                sigma: {params1["sigma"]:.2f}, rms: {rms_val:.2f}'
                 )
         )
 

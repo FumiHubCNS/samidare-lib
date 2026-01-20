@@ -337,7 +337,7 @@ def main():
         fity1 = hit._gauss(fitx1, params1["A"], params1["mu"], params1["sigma"])
 
         fig = make_subplots(rows=1, cols=1, vertical_spacing=0.15, horizontal_spacing=0.1,
-                subplot_titles=(f"Pulse height @ ch15, mu: {params1["mu"]:.2f}, sigma: {params1["sigma"]:.2f}, sigma/mu: {params1["sigma"]/params1["mu"]*100.:.2f}",))
+                subplot_titles=(f'Pulse height @ ch15, mu: {params1["mu"]:.2f}, sigma: {params1["sigma"]:.2f}, sigma/mu: {params1["sigma"]/params1["mu"]*100.:.2f}',))
         pau.add_sub_plot(fig,1,1,'spark-hist',[centers1,counts1],['Charge [ch]','Counts'])
         pau.add_sub_plot(fig,1,1,'fit',[fitx1, fity1])
         fig.update_layout( height=800, width=1000, showlegend=False,title_text=f"{input_finename}")
