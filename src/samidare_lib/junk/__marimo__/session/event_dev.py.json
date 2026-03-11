@@ -1,0 +1,484 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.18.0"
+  },
+  "cells": [
+    {
+      "id": "setup",
+      "code_hash": "9fbaa46b5763c663f63dab197e882a9d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Hbol",
+      "code_hash": "1d0db38904205bec4d6f6f6a1f6cec3e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "76058a832186bbb685ddad5c3d3c917f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:32 WARN SparkSession: Using an existing Spark session; only runtime SQL configurations will take effect.\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "vblA",
+      "code_hash": "5c7e5cfd2c7580b76ef76268f6647600",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"pulse-reconstruction-and-pulse-finder-development\">Pulse Reconstruction and Pulse Finder Development</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "0c83117fab28003705d951840aa04f03",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "24e9c385187450e4897831480cc76d94",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><span class=\"paragraph\">\u307e\u305a\u8aad\u307f\u8fbc\u3093\u3067\u30c0\u30f3\u30d7</span></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "5d7871a861c5ced16299119108d9ad32",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "2486ab3ca3e1a05cefcba2d321b5faf8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "root\n |-- data_size: integer (nullable = true)\n |-- start: long (nullable = true)\n |-- timestamp: long (nullable = true)\n |-- chip: integer (nullable = true)\n |-- sample: integer (nullable = true)\n |-- values: array (nullable = true)\n |    |-- element: integer (containsNull = true)\n\n+---------+-----+-----------+----+------+--------------------+\n|data_size|start|  timestamp|chip|sample|              values|\n+---------+-----+-----------+----+------+--------------------+\n|       60|   36|19071822856|   3|    62|[61, 74, 78, 90, ...|\n|       60|   96|19071822888|   3|    63|[62, 74, 77, 90, ...|\n|       60|  156|19075020840|   3|     0|[64, 74, 76, 90, ...|\n|       60|  312|        618|   0|     0|[83, 67, 75, 73, ...|\n|       60|  432|        670|   2|     1|[72, 74, 71, 79, ...|\n|       60|  552|        734|   2|     3|[71, 73, 70, 77, ...|\n|       60|  492|        702|   2|     2|[71, 74, 71, 77, ...|\n|       60|  372|        638|   2|     0|[72, 72, 70, 77, ...|\n|       60|  612|        766|   2|     4|[72, 72, 71, 77, ...|\n|       60|  712|        798|   2|     5|[73, 72, 70, 78, ...|\n+---------+-----+-----------+----+------+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "1105bc0441d49d4a22f76c8c61d8102b",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:32 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:32 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:32 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:32 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:32 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+---------+-----+-----------+----+------+--------------------+--------+\n|data_size|start|  timestamp|chip|sample|              values|event_id|\n+---------+-----+-----------+----+------+--------------------+--------+\n|       60|   36|19071822856|   3|    62|[61, 74, 78, 90, ...|       0|\n|       60|   96|19071822888|   3|    63|[62, 74, 77, 90, ...|       0|\n|       60|  156|19075020840|   3|     0|[64, 74, 76, 90, ...|       1|\n|       60|  312|        618|   0|     0|[83, 67, 75, 73, ...|       2|\n|       60|  372|        638|   2|     0|[72, 72, 70, 77, ...|       3|\n|       60|  432|        670|   2|     1|[72, 74, 71, 79, ...|       3|\n|       60|  492|        702|   2|     2|[71, 74, 71, 77, ...|       3|\n|       60|  552|        734|   2|     3|[71, 73, 70, 77, ...|       3|\n|       60|  612|        766|   2|     4|[72, 72, 71, 77, ...|       3|\n|       60|  712|        798|   2|     5|[73, 72, 70, 78, ...|       3|\n+---------+-----+-----------+----+------+--------------------+--------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "3e8cec0cced31aa75330a0226591735d",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+--------+------+----------+----------+-----------------+----+--------+\n|event_id|n_rows|min_sample|max_sample|n_distinct_sample|chip|is_valid|\n+--------+------+----------+----------+-----------------+----+--------+\n|       0|     2|        62|        63|                2|   3|   false|\n|       1|     1|         0|         0|                1|   3|   false|\n|       2|     1|         0|         0|                1|   0|   false|\n|       3|    64|         0|        63|               64|   2|    true|\n|       4|    64|         0|        63|               64|   3|    true|\n|       5|    63|         1|        63|               63|   0|   false|\n|       6|    64|         0|        63|               64|   1|    true|\n|       7|     1|         0|         0|                1|   3|   false|\n|       8|    64|         0|        63|               64|   0|    true|\n|       9|    64|         0|        63|               64|   1|    true|\n+--------+------+----------+----------+-----------------+----+--------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "98e44bb1e9c3e97939f03906e3f38615",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+--------+---------+-----+---------+----+------+--------------------+\n|event_id|data_size|start|timestamp|chip|sample|              values|\n+--------+---------+-----+---------+----+------+--------------------+\n|       3|       60|  372|      638|   2|     0|[72, 72, 70, 77, ...|\n|       3|       60|  432|      670|   2|     1|[72, 74, 71, 79, ...|\n|       3|       60|  492|      702|   2|     2|[71, 74, 71, 77, ...|\n|       3|       60|  552|      734|   2|     3|[71, 73, 70, 77, ...|\n|       3|       60|  612|      766|   2|     4|[72, 72, 71, 77, ...|\n|       3|       60|  712|      798|   2|     5|[73, 72, 70, 78, ...|\n|       3|       60|  772|      830|   2|     6|[71, 74, 71, 78, ...|\n|       3|       60|  832|      862|   2|     7|[72, 74, 73, 77, ...|\n|       3|       60|  892|      894|   2|     8|[72, 73, 72, 78, ...|\n|       3|       60|  952|      926|   2|     9|[71, 75, 70, 79, ...|\n+--------+---------+-----+---------+----+------+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Kclp",
+      "code_hash": "a2ce8b9feef295b2df8e888058cd7e01",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:33 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+--------+----+--------------------+\n|event_id|chip|         sample_rows|\n+--------+----+--------------------+\n|       3|   2|[{0, 638, [72, 72...|\n|       4|   3|[{0, 624, [62, 74...|\n|       6|   1|[{0, 644, [65, 89...|\n|       8|   0|[{0, 24308458, [8...|\n|       9|   1|[{0, 24308452, [6...|\n|      10|   2|[{0, 24308446, [7...|\n|      13|   0|[{0, 56308106, [8...|\n|      14|   1|[{0, 56308100, [6...|\n|      15|   2|[{0, 56308094, [7...|\n|      18|   0|[{0, 88307754, [8...|\n+--------+----+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "emfo",
+      "code_hash": "e8a01b181e974e3a6377a61d1daa4d7e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+--------+----+--------------------+--------------------+--------------------+\n|event_id|chip|         sample_rows|          timepoints|      rows_of_values|\n+--------+----+--------------------+--------------------+--------------------+\n|       3|   2|[{0, 638, [72, 72...|[638, 670, 702, 7...|[[72, 72, 70, 77,...|\n|       4|   3|[{0, 624, [62, 74...|[624, 656, 688, 7...|[[62, 74, 76, 89,...|\n|       6|   1|[{0, 644, [65, 89...|[644, 676, 708, 7...|[[65, 89, 75, 85,...|\n|       8|   0|[{0, 24308458, [8...|[24308458, 243084...|[[82, 68, 77, 78,...|\n|       9|   1|[{0, 24308452, [6...|[24308452, 243084...|[[61, 89, 76, 86,...|\n|      10|   2|[{0, 24308446, [7...|[24308446, 243084...|[[71, 72, 70, 77,...|\n|      13|   0|[{0, 56308106, [8...|[56308106, 563081...|[[86, 73, 74, 79,...|\n|      14|   1|[{0, 56308100, [6...|[56308100, 563081...|[[64, 89, 77, 87,...|\n|      15|   2|[{0, 56308094, [7...|[56308094, 563081...|[[72, 73, 74, 78,...|\n|      18|   0|[{0, 88307754, [8...|[88307754, 883077...|[[86, 68, 76, 76,...|\n+--------+----+--------------------+--------------------+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Hstk",
+      "code_hash": "bf9e28000b813a97a2772f910d340551",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:34 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+----+-------+---------+--------------------+--------------------+\n|chip|channel|timestamp|           pulse_raw|            time_raw|\n+----+-------+---------+--------------------+--------------------+\n|   2|      0|      638|[72, 72, 71, 71, ...|[638, 670, 702, 7...|\n|   2|      1|      638|[72, 74, 74, 73, ...|[638, 670, 702, 7...|\n|   2|      2|      638|[70, 71, 71, 70, ...|[638, 670, 702, 7...|\n|   2|      3|      638|[77, 79, 77, 77, ...|[638, 670, 702, 7...|\n|   2|      4|      638|[72, 72, 72, 72, ...|[638, 670, 702, 7...|\n|   2|      5|      638|[90, 90, 89, 89, ...|[638, 670, 702, 7...|\n|   2|      6|      638|[68, 70, 70, 69, ...|[638, 670, 702, 7...|\n|   2|      7|      638|[78, 79, 79, 79, ...|[638, 670, 702, 7...|\n|   2|      8|      638|[63, 63, 60, 60, ...|[638, 670, 702, 7...|\n|   2|      9|      638|[82, 84, 84, 83, ...|[638, 670, 702, 7...|\n+----+-------+---------+--------------------+--------------------+\nonly showing top 10 rows\nroot\n |-- chip: integer (nullable = true)\n |-- channel: integer (nullable = false)\n |-- timestamp: long (nullable = true)\n |-- pulse_raw: array (nullable = false)\n |    |-- element: integer (containsNull = true)\n |-- time_raw: array (nullable = false)\n |    |-- element: long (containsNull = true)\n\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "nWHF",
+      "code_hash": "77b7efb89541ac3aa861da1b355b40e6",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+----+-------+---------+--------------------+--------------------+-------------+-------------+\n|chip|channel|timestamp|           pulse_raw|            time_raw|baseline_head|baseline_tail|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+\n|   2|      0|      638|[72, 72, 71, 71, ...|[638, 670, 702, 7...|         71.7|         72.2|\n|   2|      1|      638|[72, 74, 74, 73, ...|[638, 670, 702, 7...|         73.3|         73.0|\n|   2|      2|      638|[70, 71, 71, 70, ...|[638, 670, 702, 7...|         70.9|         71.3|\n|   2|      3|      638|[77, 79, 77, 77, ...|[638, 670, 702, 7...|         77.7|         77.5|\n|   2|      4|      638|[72, 72, 72, 72, ...|[638, 670, 702, 7...|         72.2|         72.8|\n|   2|      5|      638|[90, 90, 89, 89, ...|[638, 670, 702, 7...|         89.4|         89.3|\n|   2|      6|      638|[68, 70, 70, 69, ...|[638, 670, 702, 7...|         69.9|         69.6|\n|   2|      7|      638|[78, 79, 79, 79, ...|[638, 670, 702, 7...|         78.3|         78.9|\n|   2|      8|      638|[63, 63, 60, 60, ...|[638, 670, 702, 7...|         61.8|         61.9|\n|   2|      9|      638|[82, 84, 84, 83, ...|[638, 670, 702, 7...|         81.8|         81.6|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "iLit",
+      "code_hash": "824941faf52143864c0f54bf73efb49e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+\n|chip|channel|timestamp|           pulse_raw|            time_raw|baseline_head|baseline_tail|baseline|           pulse_sub|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+\n|   2|      0|      638|[72, 72, 71, 71, ...|[638, 670, 702, 7...|         71.7|         72.2|   71.95|[0.05, 0.05, -0.9...|\n|   2|      1|      638|[72, 74, 74, 73, ...|[638, 670, 702, 7...|         73.3|         73.0|   73.15|[-1.15, 0.85, 0.8...|\n|   2|      2|      638|[70, 71, 71, 70, ...|[638, 670, 702, 7...|         70.9|         71.3|    71.1|[-1.1, -0.1, -0.1...|\n|   2|      3|      638|[77, 79, 77, 77, ...|[638, 670, 702, 7...|         77.7|         77.5|    77.6|[-0.6, 1.4, -0.6,...|\n|   2|      4|      638|[72, 72, 72, 72, ...|[638, 670, 702, 7...|         72.2|         72.8|    72.5|[-0.5, -0.5, -0.5...|\n|   2|      5|      638|[90, 90, 89, 89, ...|[638, 670, 702, 7...|         89.4|         89.3|   89.35|[0.65, 0.65, -0.3...|\n|   2|      6|      638|[68, 70, 70, 69, ...|[638, 670, 702, 7...|         69.9|         69.6|   69.75|[-1.75, 0.25, 0.2...|\n|   2|      7|      638|[78, 79, 79, 79, ...|[638, 670, 702, 7...|         78.3|         78.9|    78.6|[-0.6, 0.4, 0.4, ...|\n|   2|      8|      638|[63, 63, 60, 60, ...|[638, 670, 702, 7...|         61.8|         61.9|   61.85|[1.15, 1.15, -1.8...|\n|   2|      9|      638|[82, 84, 84, 83, ...|[638, 670, 702, 7...|         81.8|         81.6|    81.7|[0.3, 2.3, 2.3, 1...|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ZHCJ",
+      "code_hash": "d8c3b82bd5eada98eb88279f0620cb45",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:35 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+--------------------+\n|chip|channel|timestamp|           pulse_raw|            time_raw|baseline_head|baseline_tail|baseline|           pulse_sub|             time_ns|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+--------------------+\n|   2|      0|      638|[72, 72, 71, 71, ...|[638, 670, 702, 7...|         71.7|         72.2|   71.95|[0.05, 0.05, -0.9...|[1993.75, 2093.75...|\n|   2|      1|      638|[72, 74, 74, 73, ...|[638, 670, 702, 7...|         73.3|         73.0|   73.15|[-1.15, 0.85, 0.8...|[1993.75, 2093.75...|\n|   2|      2|      638|[70, 71, 71, 70, ...|[638, 670, 702, 7...|         70.9|         71.3|    71.1|[-1.1, -0.1, -0.1...|[1993.75, 2093.75...|\n|   2|      3|      638|[77, 79, 77, 77, ...|[638, 670, 702, 7...|         77.7|         77.5|    77.6|[-0.6, 1.4, -0.6,...|[1993.75, 2093.75...|\n|   2|      4|      638|[72, 72, 72, 72, ...|[638, 670, 702, 7...|         72.2|         72.8|    72.5|[-0.5, -0.5, -0.5...|[1993.75, 2093.75...|\n|   2|      5|      638|[90, 90, 89, 89, ...|[638, 670, 702, 7...|         89.4|         89.3|   89.35|[0.65, 0.65, -0.3...|[1993.75, 2093.75...|\n|   2|      6|      638|[68, 70, 70, 69, ...|[638, 670, 702, 7...|         69.9|         69.6|   69.75|[-1.75, 0.25, 0.2...|[1993.75, 2093.75...|\n|   2|      7|      638|[78, 79, 79, 79, ...|[638, 670, 702, 7...|         78.3|         78.9|    78.6|[-0.6, 0.4, 0.4, ...|[1993.75, 2093.75...|\n|   2|      8|      638|[63, 63, 60, 60, ...|[638, 670, 702, 7...|         61.8|         61.9|   61.85|[1.15, 1.15, -1.8...|[1993.75, 2093.75...|\n|   2|      9|      638|[82, 84, 84, 83, ...|[638, 670, 702, 7...|         81.8|         81.6|    81.7|[0.3, 2.3, 2.3, 1...|[1993.75, 2093.75...|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "ROlb",
+      "code_hash": "16b6338aeb1158f8189b56625e87531e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "qnkX",
+      "code_hash": "ee35cd162a61d7c1019da8005b4b80d8",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:57:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+--------------------+---------------+\n|chip|channel|timestamp|           pulse_raw|            time_raw|baseline_head|baseline_tail|baseline|           pulse_sub|             time_ns|detected_pulses|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+--------------------+---------------+\n|   2|      0|      638|[72, 72, 71, 71, ...|[638, 670, 702, 7...|         71.7|         72.2|   71.95|[0.05, 0.05, -0.9...|[1993.75, 2093.75...|             []|\n|   2|      1|      638|[72, 74, 74, 73, ...|[638, 670, 702, 7...|         73.3|         73.0|   73.15|[-1.15, 0.85, 0.8...|[1993.75, 2093.75...|             []|\n|   2|      2|      638|[70, 71, 71, 70, ...|[638, 670, 702, 7...|         70.9|         71.3|    71.1|[-1.1, -0.1, -0.1...|[1993.75, 2093.75...|             []|\n|   2|      3|      638|[77, 79, 77, 77, ...|[638, 670, 702, 7...|         77.7|         77.5|    77.6|[-0.6, 1.4, -0.6,...|[1993.75, 2093.75...|             []|\n|   2|      4|      638|[72, 72, 72, 72, ...|[638, 670, 702, 7...|         72.2|         72.8|    72.5|[-0.5, -0.5, -0.5...|[1993.75, 2093.75...|             []|\n|   2|      5|      638|[90, 90, 89, 89, ...|[638, 670, 702, 7...|         89.4|         89.3|   89.35|[0.65, 0.65, -0.3...|[1993.75, 2093.75...|             []|\n|   2|      6|      638|[68, 70, 70, 69, ...|[638, 670, 702, 7...|         69.9|         69.6|   69.75|[-1.75, 0.25, 0.2...|[1993.75, 2093.75...|             []|\n|   2|      7|      638|[78, 79, 79, 79, ...|[638, 670, 702, 7...|         78.3|         78.9|    78.6|[-0.6, 0.4, 0.4, ...|[1993.75, 2093.75...|             []|\n|   2|      8|      638|[63, 63, 60, 60, ...|[638, 670, 702, 7...|         61.8|         61.9|   61.85|[1.15, 1.15, -1.8...|[1993.75, 2093.75...|             []|\n|   2|      9|      638|[82, 84, 84, 83, ...|[638, 670, 702, 7...|         81.8|         81.6|    81.7|[0.3, 2.3, 2.3, 1...|[1993.75, 2093.75...|             []|\n+----+-------+---------+--------------------+--------------------+-------------+-------------+--------+--------------------+--------------------+---------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "TqIu",
+      "code_hash": "8702b793b7a31699240979d871eb140f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stderr",
+          "text": "26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n26/03/04 00:58:36 WARN WindowExec: No Partition Defined for Window operation! Moving all data to a single partition, this can cause serious performance degradation.\n\r[Stage 171:>                                                        (0 + 1) / 1]\r\r                                                                                \r",
+          "mimetype": "text/plain"
+        },
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+----+-------+---------+--------+--------+--------+------------+--------------+--------------+----------+--------------------+--------------------+\n|chip|channel|timestamp|baseline|rise_idx|fall_idx|pulse_length|     rise_time|     fall_time|pulse_peak|       pulse_segment|        time_segment|\n+----+-------+---------+--------+--------+--------+------------+--------------+--------------+----------+--------------------+--------------------+\n|   0|      0| 24308458|   83.55|      16|      20|           5| 7.596553125E7| 7.596593125E7|    799.45|[722.45, 799.45, ...|[7.596553125E7, 7...|\n|   0|      0| 56308106|   84.65|      15|      20|           6|1.7596433125E8|1.7596483125E8|    863.35|[64.35, 863.35, 6...|[1.7596433125E8, ...|\n|   0|      0| 88307754|    84.0|      15|      19|           5|2.7596323125E8|2.7596363125E8|     896.0|[309.0, 896.0, 54...|[2.7596323125E8, ...|\n|   0|      0|120307370|   84.25|      16|      20|           5|3.7596213125E8|3.7596253125E8|    855.75|[580.75, 855.75, ...|[3.7596213125E8, ...|\n|   0|      0|152307018|   84.15|      16|      20|           5|4.7596103125E8|4.7596143125E8|    789.85|[789.85, 759.85, ...|[4.7596103125E8, ...|\n|   0|      0|184306666|    84.8|      15|      19|           5|5.7595983125E8|5.7596023125E8|     883.2|[135.2, 883.2, 63...|[5.7595983125E8, ...|\n|   0|      0|216306314|    83.9|      15|      19|           5|6.7595873125E8|6.7595913125E8|     895.1|[405.1, 895.1, 50...|[6.7595873125E8, ...|\n|   0|      0|248305930|    84.2|      16|      20|           5|7.7595763125E8|7.7595803125E8|     828.8|[663.8, 828.8, 38...|[7.7595763125E8, ...|\n|   0|      0|280305578|    84.0|      16|      20|           5|8.7595653125E8|8.7595693125E8|     835.0|[835.0, 718.0, 27...|[8.7595653125E8, ...|\n|   0|      0|312305226|    84.2|      15|      19|           5|9.7595533125E8|9.7595573125E8|     897.8|[216.8, 897.8, 59...|[9.7595533125E8, ...|\n+----+-------+---------+--------+--------+--------+------------+--------------+--------------+----------+--------------------+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "Vxnm",
+      "code_hash": "9171145e6895262e04006e61eef6f98e",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": [
+        {
+          "type": "stream",
+          "name": "stdout",
+          "text": "+----+-------+---------+--------+--------+--------+------------+--------------+--------------+----------+--------------------+--------------------+\n|chip|channel|timestamp|baseline|rise_idx|fall_idx|pulse_length|     rise_time|     fall_time|pulse_peak|       pulse_segment|        time_segment|\n+----+-------+---------+--------+--------+--------+------------+--------------+--------------+----------+--------------------+--------------------+\n|   0|      0| 24308458|   83.55|      16|      20|           5| 7.596553125E7| 7.596593125E7|    799.45|[722.45, 799.45, ...|[7.596553125E7, 7...|\n|   0|      0| 56308106|   84.65|      15|      20|           6|1.7596433125E8|1.7596483125E8|    863.35|[64.35, 863.35, 6...|[1.7596433125E8, ...|\n|   0|      0| 88307754|    84.0|      15|      19|           5|2.7596323125E8|2.7596363125E8|     896.0|[309.0, 896.0, 54...|[2.7596323125E8, ...|\n|   0|      0|120307370|   84.25|      16|      20|           5|3.7596213125E8|3.7596253125E8|    855.75|[580.75, 855.75, ...|[3.7596213125E8, ...|\n|   0|      0|152307018|   84.15|      16|      20|           5|4.7596103125E8|4.7596143125E8|    789.85|[789.85, 759.85, ...|[4.7596103125E8, ...|\n|   0|      0|184306666|    84.8|      15|      19|           5|5.7595983125E8|5.7596023125E8|     883.2|[135.2, 883.2, 63...|[5.7595983125E8, ...|\n|   0|      0|216306314|    83.9|      15|      19|           5|6.7595873125E8|6.7595913125E8|     895.1|[405.1, 895.1, 50...|[6.7595873125E8, ...|\n|   0|      0|248305930|    84.2|      16|      20|           5|7.7595763125E8|7.7595803125E8|     828.8|[663.8, 828.8, 38...|[7.7595763125E8, ...|\n|   0|      0|280305578|    84.0|      16|      20|           5|8.7595653125E8|8.7595693125E8|     835.0|[835.0, 718.0, 27...|[8.7595653125E8, ...|\n|   0|      0|312305226|    84.2|      15|      19|           5|9.7595533125E8|9.7595573125E8|     897.8|[216.8, 897.8, 59...|[9.7595533125E8, ...|\n+----+-------+---------+--------+--------+--------+------------+--------------+--------------+----------+--------------------+--------------------+\nonly showing top 10 rows\n",
+          "mimetype": "text/plain"
+        }
+      ]
+    },
+    {
+      "id": "DnEU",
+      "code_hash": null,
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ulZA",
+      "code_hash": null,
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "ecfG",
+      "code_hash": null,
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}

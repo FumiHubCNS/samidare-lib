@@ -1,10 +1,10 @@
 from . import analysis
-from . import decoder
-from . import detector
+from . import core
+from . import util
 
 
 __all__ = [
-	'analysis',
-	'decoder',
-	'detector',
+	'core',
+	'util',
+    'analysis',
 ]

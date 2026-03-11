@@ -22,8 +22,8 @@ from plotly.subplots import make_subplots
 this_file_path = pathlib.Path(__file__).parent
 sys.path.append(str(this_file_path.parent.parent.parent / "src"))
 
-import samidare_lib.detector.padinfo as padinfo
-import samidare_lib.decoder.pyspark_pulse_analysis_version2 as pau
+import samidare_lib.util.padinfo as padinfo
+import samidare_lib.core.pyspark_pulse_analysis_version2 as pau
 
 def fit_line(x, z):
     x = np.array(x)
