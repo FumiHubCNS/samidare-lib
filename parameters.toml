@@ -1,0 +1,7 @@
+[fileinfo]
+base_input_path  = "src/samidare_lib/example"
+base_output_path = "output"
+input_file_name  = "minitpc_demo.bin"
+
+[analysis]
+tpc_mapfile = "prm/cat/minitpc.map"
