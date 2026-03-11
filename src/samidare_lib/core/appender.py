@@ -3,8 +3,8 @@ import sys
 import pyarrow as pa
 import pyarrow.parquet as pq
 
-this_file_path = pathlib.Path(__file__).parent
-sys.path.append(str(this_file_path.parent.parent.parent / "src"))
+_this_file_path = pathlib.Path(__file__).parent
+sys.path.append(str(_this_file_path.parent.parent.parent / "src"))
 
 class PulseParquetAppender:                    
 

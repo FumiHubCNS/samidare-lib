@@ -6,8 +6,8 @@ import pandas as pd
 import sys
 import pathlib
 
-this_file_path = pathlib.Path(__file__).parent
-sys.path.append(str(this_file_path.parent.parent.parent / "src"))
+_this_file_path = pathlib.Path(__file__).parent
+sys.path.append(str(_this_file_path.parent.parent.parent / "src"))
 
 schema_map = (
     T.StructType()

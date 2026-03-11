@@ -2,8 +2,8 @@ import click
 import pathlib
 import sys
 
-this_file_path = pathlib.Path(__file__).parent
-sys.path.append(str(this_file_path.parent.parent.parent / "src"))
+_this_file_path = pathlib.Path(__file__).parent
+sys.path.append(str(_this_file_path.parent.parent.parent / "src"))
 
 from samidare_lib.core.decode_v0 import main as decode_v0_main
 from samidare_lib.core.decode_v1 import main as decode_v1_main

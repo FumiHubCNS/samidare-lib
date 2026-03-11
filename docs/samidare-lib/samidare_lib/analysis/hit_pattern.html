@@ -53,9 +53,6 @@
             <h2>API Documentation</h2>
                 <ul class="memberlist">
             <li>
-                    <a class="variable" href="#this_file_path">this_file_path</a>
-            </li>
-            <li>
                     <a class="variable" href="#schema_map">schema_map</a>
             </li>
             <li>
@@ -105,8 +102,8 @@ samidare_lib<wbr>.<a href="./../analysis.html">analysis</a><wbr>.hit_pattern    
 </span><span id="L-6"><a href="#L-6"><span class="linenos">  6</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
 </span><span id="L-7"><a href="#L-7"><span class="linenos">  7</span></a><span class="kn">import</span><span class="w"> </span><span class="nn">pathlib</span>
 </span><span id="L-8"><a href="#L-8"><span class="linenos">  8</span></a>
-</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="n">this_file_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">this_file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">))</span>
+</span><span id="L-9"><a href="#L-9"><span class="linenos">  9</span></a><span class="n">_this_file_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos"> 10</span></a><span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_this_file_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span><span class="p">))</span>
 </span><span id="L-11"><a href="#L-11"><span class="linenos"> 11</span></a>
 </span><span id="L-12"><a href="#L-12"><span class="linenos"> 12</span></a><span class="n">schema_map</span> <span class="o">=</span> <span class="p">(</span>
 </span><span id="L-13"><a href="#L-13"><span class="linenos"> 13</span></a>    <span class="n">T</span><span class="o">.</span><span class="n">StructType</span><span class="p">()</span>
@@ -333,18 +330,6 @@ samidare_lib<wbr>.<a href="./../analysis.html">analysis</a><wbr>.hit_pattern    
 
 
             </section>
-                <section id="this_file_path">
-                    <div class="attr variable">
-            <span class="name">this_file_path</span>        =
-<span class="default_value">PosixPath(&#39;/Users/fendo/Work/Program/uv-python/samidare-lib/src/samidare_lib/analysis&#39;)</span>
-
-        
-    </div>
-    <a class="headerlink" href="#this_file_path"></a>
-    
-    
-
-                </section>
                 <section id="schema_map">
                     <div class="attr variable">
             <span class="name">schema_map</span>        =

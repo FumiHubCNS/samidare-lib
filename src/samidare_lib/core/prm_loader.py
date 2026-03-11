@@ -3,8 +3,8 @@ import pathlib
 import sys
 import toml
 
-this_file_path = pathlib.Path(__file__).parent
-sys.path.append(str(this_file_path.parent.parent.parent / "src"))
+_this_file_path = pathlib.Path(__file__).parent
+sys.path.append(str(_this_file_path.parent.parent.parent / "src"))
 
 def check_input_file(fileinfo: dict, file: str | None = None):
     base = Path(fileinfo["base_input_path"])
@@ -56,7 +56,7 @@ def check_input_file(fileinfo: dict, file: str | None = None):
     )
 
 def get_fileinfo():
-    toml_file_path = this_file_path  / "../../../parameters.toml"
+    toml_file_path = _this_file_path  / "../../../parameters.toml"
 
     if toml_file_path.is_file():
         print(f"loading config from toml file., path: {toml_file_path}")

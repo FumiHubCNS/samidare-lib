@@ -1,10 +1,3 @@
-"""!
-@file padinfo.py
-@version 1
-@author Fumitaka ENDO
-@date 2025-07-25T20:10:19+09:00
-@brief get pad configuration 
-"""
 import argparse
 import pathlib
 import catm_lib as cat
@@ -13,8 +6,6 @@ import copy
 import catm_lib.util.catmviewer as catview
 from math import isclose, isnan
 from typing import Sequence, Union, Optional
-
-this_file_path = pathlib.Path(__file__).parent
 
 Number = Union[int, float]
 

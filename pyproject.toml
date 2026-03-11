@@ -53,4 +53,4 @@ dev = [
 
 [tool.taskipy.tasks]
 mkdocs = """ mkdir -p page/docs/examples && rm -rf page/docs/examples/* && cp -R notebook/__marimo__/* page/docs/examples/ && mkdocs build -v -f page/mkdocs.yml"""
-pdoc = """rm -rf docs/samidare-lib && pdoc samidare_lib.util samidare_lib.analysis --output-directory docs/samidare-lib --math --docformat google"""
+pdoc = """rm -rf docs/samidare-lib && pdoc samidare_lib.util samidare_lib.analysis samidare_lib.core --output-directory docs/samidare-lib --math --docformat google"""
