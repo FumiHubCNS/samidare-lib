@@ -19,8 +19,8 @@ from samidare_lib.core.appender import PulseParquetAppender
 from samidare_lib.core.appender import SAMPADataParquetAppender
 from samidare_lib.core.prm_loader import check_input_file, get_fileinfo
 
-this_file_path = pathlib.Path(__file__).parent
-sys.path.append(str(this_file_path.parent.parent.parent / "src"))
+_this_file_path = pathlib.Path(__file__).parent
+sys.path.append(str(_this_file_path.parent.parent.parent / "src"))
 
 Pair = Tuple[int, int]
 Color = Tuple[float, float, float, float]

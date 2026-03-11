@@ -405,6 +405,11 @@ def common_options(func):
     @click.option('--max-blocks', type=int, default=-1, help='maximum number of blocks to process for testing (default: -1 for no limit)')
     @click.option('--plot-size', type=int, default=64, help='number of points to show in the plot window (default: 64)')
     @click.option('--plot-interval', type=int, default=100, help='plot interval in milliseconds (default: 100)')
+    @click.option('--bit-shift', type=int, default=0, help='bit shift value (default: 0)')
+    @click.option('--search-limit', type=int, default=60, help='ender search limit (default: 60)')
+    @click.option('--max-workers', type=int, default=4, help='number of markers (default: 4)')
+    @click.option('--max-inflight', type=int, default=1000, help='maximum inflight (default: 1000)')
+    @click.option('--save-batch-size', type=int, default=2000, help='save batch size (default: 2000)')
 
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
@@ -413,7 +418,12 @@ def common_options(func):
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @common_options
-def main(file, plot, dump, save, max_blocks, plot_size, plot_interval):
+def main(
+    file, plot, dump, save, 
+    max_blocks, plot_size, plot_interval, 
+    bit_shift, search_limit, max_workers, 
+    max_inflight, save_batch_size
+):
 
 
     fileinfo = get_fileinfo()
@@ -442,13 +452,13 @@ def main(file, plot, dump, save, max_blocks, plot_size, plot_interval):
 
     for _result in iter_parsed_blocks_parallel_save(
         input_list["found"],
-        bit_shift=0,
-        search_limit=60,
-        max_workers=4,
-        max_inflight=1000,
+        bit_shift=bit_shift,
+        search_limit=search_limit,
+        max_workers=max_workers,
+        max_inflight=max_inflight,
         save_flag=save,
         parquet_path=output_path,
-        save_batch_size=2000,
+        save_batch_size=save_batch_size,
     ):
         if plot:
             if _result["size"] == 60:

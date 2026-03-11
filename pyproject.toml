@@ -33,6 +33,11 @@ dependencies = [
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["src/samidare_lib"]
+ 
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [tool.marimo.runtime]
 output_max_bytes = 100_000_000
@@ -40,7 +45,6 @@ output_max_bytes = 100_000_000
 [tool.uv.sources]
 marimo-lib = { git = "https://github.com/FumiHubCNS/marimo-lib" }
 catm-lib = { git = "https://github.com/FumiHubCNS/catm-lib" }
-
 
 [dependency-groups]
 dev = [
@@ -50,6 +54,9 @@ dev = [
     "taskipy>=1.14.1",
     "python-lsp-server[all]>=1.13.1",
 ]
+
+[project.scripts]
+decode = "samidare_lib.core.decoder:main"
 
 [tool.taskipy.tasks]
 mkdocs = """ mkdir -p page/docs/examples && rm -rf page/docs/examples/* && cp -R notebook/__marimo__/* page/docs/examples/ && mkdocs build -v -f page/mkdocs.yml"""
