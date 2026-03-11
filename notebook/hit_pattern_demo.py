@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="medium")
+app = marimo.App(width="medium", auto_download=["html"])
 
 with app.setup:
     from pyspark.sql import functions as F

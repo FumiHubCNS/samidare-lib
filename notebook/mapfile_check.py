@@ -1,7 +1,7 @@
 import marimo
 
 __generated_with = "0.20.4"
-app = marimo.App(width="medium")
+app = marimo.App(width="medium", auto_download=["html"])
 
 with app.setup:
     import pandas as pd
@@ -16,19 +16,13 @@ def _():
     return (mo,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     # Mapファイル&ジオメトリ確認用サンプルコード
 
     実機で取得したデータを解析する際に、イベントディスプレイを表示させるためのクラスの使い方を書いておきます。
-    """)
-    return
 
-
-@app.cell
-def _(mo):
-    mo.md(r"""
     ## 読み出し電極の描画用のジオメトリを作成する。
 
     `samidare-lib`では[catm-lib](https://github.com/FumiHubCNS/catm-lib)のコード群が使えるようになっています。
@@ -51,7 +45,7 @@ def _():
     return (tpcs,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     ## マップファイルを読み込み、
@@ -93,7 +87,7 @@ def _():
     return (mapdf,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     `tpcs.show_pads()`では書くパッドに色をつけたり、数値を表示したりできます。
@@ -140,7 +134,7 @@ def _(tpc_channel, tpc_chip, tpc_dev, tpcs):
     return (textdict,)
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     あとは作ったリストを使用し、`catview.get_color_array`, `get_color_list`を実行しのちに戻り値を渡せば描画できます。
@@ -184,7 +178,7 @@ def _(textdict, tpcs):
     return
 
 
-@app.cell
+@app.cell(hide_code=True)
 def _(mo):
     mo.md(r"""
     ## その他

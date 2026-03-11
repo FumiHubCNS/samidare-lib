@@ -54,7 +54,7 @@ spark-submit --version
 ```bash
 git clone https://github.com/FumiHubCNS/samidare-lib
 cd samidare-lib
-uv sync --group dev
+uv sync
 ```
 
 ## コマンド実行方法
