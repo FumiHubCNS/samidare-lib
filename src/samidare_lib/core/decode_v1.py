@@ -429,6 +429,8 @@ def main(file, plot, dump, save, max_blocks, plot_size, plot_interval):
     print(f"found input file: {input_list['found']}")
     
     if save:
+        out_dir = pathlib.Path(output_path).expanduser().resolve().parent
+        out_dir.mkdir(parents=True, exist_ok=True)
         print(f"output parquet path: {output_path}")
 
     max_blocks

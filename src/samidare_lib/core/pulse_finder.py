@@ -569,6 +569,9 @@ def main(
         # df.printSchema()
 
     if save:
+        out_dir = pathlib.Path(output_path).expanduser().resolve().parent
+        out_dir.mkdir(parents=True, exist_ok=True)
+        
         df.write.mode("overwrite").parquet(output_path)
         print(f"Output saved to: {output_path}")
     
