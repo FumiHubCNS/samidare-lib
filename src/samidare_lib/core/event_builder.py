@@ -15,6 +15,8 @@ def get_spark_session(app_name="samidare-event-builder"):
         SparkSession.builder
         .master("local[*]")
         .appName(app_name)
+        .config("spark.driver.memory", "8g")
+        .config("spark.sql.shuffle.partitions", "200")
         .getOrCreate()
     )
 
