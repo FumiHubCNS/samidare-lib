@@ -73,6 +73,9 @@ dev = { features = ["dev"], solve-group = "default" }
 python = "3.13.*"
 openjdk = "17.*"
 
+[tool.pixi.activation.env]
+SPARK_HOME = ""
+
 [tool.pixi.tasks]
 mkdocs = """
 mkdir -p page/docs/examples &&
