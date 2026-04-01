@@ -6,6 +6,7 @@ from . import viewer
 from . import prm_loader
 from . import pulse_finder
 from . import event_builder
+from . import pixi_spark
 	
 __all__ = [
     "appender",
@@ -16,4 +17,5 @@ __all__ = [
 	"prm_loader",
 	"pulse_finder",
 	"event_builder",
+	"pixi_spark",
 ]
