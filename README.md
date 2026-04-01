@@ -4,49 +4,18 @@
 
 ## Requirements
 
-* **Python >= 3.13**
-* **uv**（依存解決・仮想環境管理）
-* （PySpark を使う場合）**JDK（推奨: 17） + Apache Spark**
+- pixi
+- (PySpark 用) Java 17 以上
+  - 本リポジトリでは pixi により openjdk 17 を環境に含めます
 
-  * `pyspark>=4.0.0` 
-  * Spark 4 系は Java 17が必要
+## Install
 
-## Installデモ
-
-### uv のインストール
+### pixi のインストール
 
 macOS / Linux:
 
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
-```
-
-
-
-### JDK + Spark　（PySparkを使う場合） ※Homebrew 例
-
-**JDK 17:**
-
-```bash
-brew install openjdk@17
-```
-
-```bash
-sudo ln -sfn "$(brew --prefix)/opt/openjdk@17/libexec/openjdk.jdk" \
-  /Library/Java/JavaVirtualMachines/openjdk-17.jdk
-```
-
-**Spark:**
-
-```bash
-brew install apache-spark
-```
-
-動作確認:
-
-```bash
-java -version
-spark-submit --version
+curl -fsSL https://pixi.sh/install.sh | sh
 ```
 
 ### リポジトリの取得&インストール
@@ -54,7 +23,7 @@ spark-submit --version
 ```bash
 git clone https://github.com/FumiHubCNS/samidare-lib
 cd samidare-lib
-uv sync
+pixi install
 ```
 
 ## コマンド実行方法
@@ -65,33 +34,33 @@ uv sync
 
 ```bash
 # decode (version 1)
-uv run python src/samidare_lib/core/decoder.py v1 -f [filename] --save
+pixi run python src/samidare_lib/core/decoder.py v1 -f [filename] --save
 
 # pulse 抽出
-uv run python src/samidare_lib/core/decoder.py pulse -f [filename] --save
+pixi run python src/samidare_lib/core/decoder.py pulse -f [filename] --save
 
 # event 構築
-uv run python src/samidare_lib/core/decoder.py event -f [filename] --save
+pixi run python src/samidare_lib/core/decoder.py event -f [filename] --save
 ```
 
 ### Quick start
 
 ```bash
-uv run python src/samidare_lib/core/decoder.py v1 -d -p -s
+pixi run python src/samidare_lib/core/decoder.py v1 -d -p -s
 ```
 
 ---
 
 ## Notebooks (marimo)
 
-`uv run marimo edit`にてノートブックを開くことができます。
+`pixi run marimo edit`にてノートブックを開くことができます。
 
 実行方法やその結果得られるデータの表示は`notebook/how_to_use_demo.py`で確認できます。
 
 以下のコマンドでノートブックを開き、ひとまず実行してみましょう。
 
 ```zsh 
-uv run marimo edit notebook/how_to_use_demo.py
+pixi run marimo edit notebook/how_to_use_demo.py
 ```
 
 

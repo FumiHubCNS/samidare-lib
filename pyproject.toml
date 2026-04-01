@@ -21,12 +21,12 @@ dependencies = [
     "kaleido>=1.0.0",
     "pyqtgraph>=0.14.0",
     "pyqt5>=5.15.11",
-    "catm-lib",
     "json5>=0.12.1",
     "jupyterlab>=4.4.10",
     "jupyterlab-lsp>=5.2.0",
     "marimo>=0.17.6",
-    "marimo-lib",
+    "catm-lib @ git+https://github.com/FumiHubCNS/catm-lib.git",
+    "marimo-lib @ git+https://github.com/FumiHubCNS/marimo-lib.git",
 ]
 
 [build-system]
@@ -41,10 +41,6 @@ allow-direct-references = true
 
 [tool.marimo.runtime]
 output_max_bytes = 100_000_000
-
-[tool.uv.sources]
-marimo-lib = { git = "https://github.com/FumiHubCNS/marimo-lib" }
-catm-lib = { git = "https://github.com/FumiHubCNS/catm-lib" }
 
 [dependency-groups]
 dev = [
@@ -61,3 +57,27 @@ decode = "samidare_lib.core.decoder:main"
 [tool.taskipy.tasks]
 mkdocs = """ mkdir -p page/docs/examples && rm -rf page/docs/examples/* && cp -R notebook/__marimo__/* page/docs/examples/ && mkdocs build -v -f page/mkdocs.yml"""
 pdoc = """rm -rf docs/samidare-lib && pdoc samidare_lib.util samidare_lib.analysis samidare_lib.core --output-directory docs/samidare-lib --math --docformat google"""
+
+[tool.pixi.workspace]
+channels = ["conda-forge"]
+platforms = ["linux-64", "osx-arm64", "osx-64"]
+
+[tool.pixi.pypi-dependencies]
+samidare-lib = { path = ".", editable = true }
+
+[tool.pixi.environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+
+[tool.pixi.dependencies]
+python = "3.13.*"
+openjdk = "17.*"
+
+[tool.pixi.tasks]
+mkdocs = """
+mkdir -p page/docs/examples &&
+rm -rf page/docs/examples/* &&
+cp -R notebook/__marimo__/* page/docs/examples/ &&
+mkdocs build -v -f page/mkdocs.yml
+"""
+pdoc = "rm -rf docs/samidare-lib && pdoc samidare_lib.util samidare_lib.analysis samidare_lib.core --output-directory docs/samidare-lib --math --docformat google"
