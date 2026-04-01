@@ -44,7 +44,7 @@ def get_opopsite_id(ref):
 
 def get_tpc_info(zoffset=0, oposite_flag=True):  
 
-  base_padinfo = cat.readoutpad.basepad.generate_regular_n_polygon(3, 2.75, 90,False)
+  base_padinfo = cat.readoutpad.basepad.generate_regular_n_polygon(n=3, length=2.75, theta=90, plane='xz', flag=False)
 
   pad = cat.readoutpad.basepad.TReadoutPadArray()
   pad.add_basepad(base_padinfo)
