@@ -25,7 +25,7 @@ dependencies = [
     "jupyterlab>=4.4.10",
     "jupyterlab-lsp>=5.2.0",
     "marimo>=0.17.6",
-    "catm-lib @ git+https://github.com/FumiHubCNS/catm-lib.git",
+    "catm-lib @ git+https://github.com/FumiHubCNS/catm-lib.git@light-deps",
     "marimo-lib @ git+https://github.com/FumiHubCNS/marimo-lib.git",
 ]
 
