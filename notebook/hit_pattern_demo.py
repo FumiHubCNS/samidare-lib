@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.20.4"
+__generated_with = "0.22.0"
 app = marimo.App(width="medium", auto_download=["html"])
 
 with app.setup:
@@ -10,6 +10,9 @@ with app.setup:
     import samidare_lib.core as core
     import samidare_lib.util as util
     import marimo_lib.util as molib
+    import os
+
+    os.environ.pop("SPARK_HOME", None)
 
 
 @app.cell(hide_code=True)

@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.20.4"
+__generated_with = "0.22.0"
 app = marimo.App(width="medium", auto_download=["html"])
 
 with app.setup:
@@ -8,7 +8,9 @@ with app.setup:
     import sys
     import numpy as np
     import pathlib
+    import os
 
+    os.environ.pop("SPARK_HOME", None)
     this_file_path = pathlib.Path(__file__).parent
 
 
@@ -465,6 +467,11 @@ def _(df_event, molib):
     )
 
     _fig.update_layout(height=300, width=1000, title_text='Demo')
+    return
+
+
+@app.cell
+def _():
     return
 
 
