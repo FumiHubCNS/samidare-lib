@@ -8,9 +8,7 @@ with app.setup:
     import sys
     import numpy as np
     import pathlib
-    import os
 
-    os.environ.pop("SPARK_HOME", None)
     this_file_path = pathlib.Path(__file__).parent
 
 
@@ -52,7 +50,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("uv run src/samidare_lib/core/decoder.py --help"),
+        comandline_arg("pixi run python src/samidare_lib/core/decoder.py --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -83,7 +81,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("uv run src/samidare_lib/core/decoder.py v1 --help"),
+        comandline_arg("pixi run python src/samidare_lib/core/decoder.py v1 --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -124,15 +122,17 @@ def _():
 
 
 @app.cell
-def _(binary_file_path, subprocess):
-    if 0:
-        _result = subprocess.run(
-            comandline_arg(f"uv run python src/samidare_lib/core/decoder.py v1 -f {binary_file_path} --save"),
-            cwd=str(this_file_path.parent),
-            check=True,
-            text=True,
-            capture_output=True,
-        )
+def _(binary_file_path, mo, subprocess):
+    _options = "--max-workers 16 --max-blocks 50000"
+    _result = subprocess.run(
+        comandline_arg(f"pixi run python src/samidare_lib/core/decoder.py v1 -f {binary_file_path} --save {_options}"),
+        cwd=str(this_file_path.parent),
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+
+    mo.md(f"```text\n{_result.stdout}\n```")
     return
 
 
@@ -254,7 +254,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("uv run src/samidare_lib/core/decoder.py pulse --help"),
+        comandline_arg("pixi run python src/samidare_lib/core/decoder.py pulse --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -274,15 +274,16 @@ def _(mo):
 
 
 @app.cell
-def _(binary_file_path, subprocess):
-    if 0:
-        _result = subprocess.run(
-            comandline_arg(f"uv run python src/samidare_lib/core/decoder.py pulse -f {binary_file_path} --save --start-pos 256"),
-            cwd=str(this_file_path.parent),
-            check=True,
-            text=True,
-            capture_output=True,
-        )
+def _(binary_file_path, mo, subprocess):
+    _result = subprocess.run(
+        comandline_arg(f"pixi run python src/samidare_lib/core/decoder.py pulse -f {binary_file_path} --save --start-pos 256"),
+        cwd=str(this_file_path.parent),
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+
+    mo.md(f"```text\n{_result.stdout}\n```")
     return
 
 
@@ -312,7 +313,7 @@ def _(mo):
 
 @app.cell
 def _(df_pulse, molib):
-    _nmax = 10000
+    _nmax = 1000
     _df = df_pulse.select("pulse_segment", "peak", "charge").limit(_nmax).toPandas()
 
     _pulse = _df['pulse_segment'].to_numpy()
@@ -406,7 +407,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("uv run src/samidare_lib/core/decoder.py event --help"),
+        comandline_arg("pixi run python src/samidare_lib/core/decoder.py event --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -418,15 +419,16 @@ def _(mo, subprocess):
 
 
 @app.cell
-def _(binary_file_path, subprocess):
-    if 0:
-        _result = subprocess.run(
-            comandline_arg(f"uv run python src/samidare_lib/core/decoder.py event -f {binary_file_path} --save --threshold 3e6"),
-            cwd=str(this_file_path.parent),
-            check=True,
-            text=True,
-            capture_output=True,
-        )
+def _(binary_file_path, mo, subprocess):
+    _result = subprocess.run(
+        comandline_arg(f"uv run python src/samidare_lib/core/decoder.py event -f {binary_file_path} --save --threshold 3e6"),
+        cwd=str(this_file_path.parent),
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+
+    mo.md(f"```text\n{_result.stdout}\n```")
     return
 
 
@@ -467,11 +469,6 @@ def _(df_event, molib):
     )
 
     _fig.update_layout(height=300, width=1000, title_text='Demo')
-    return
-
-
-@app.cell
-def _():
     return
 
 

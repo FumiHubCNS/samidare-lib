@@ -450,40 +450,43 @@ def main(
     if dump:
         data = pathlib.Path(input_list["found"]).read_bytes()
 
-    for _result in iter_parsed_blocks_parallel_save(
-        input_list["found"],
-        bit_shift=bit_shift,
-        search_limit=search_limit,
-        max_workers=max_workers,
-        max_inflight=max_inflight,
-        save_flag=save,
-        parquet_path=output_path,
-        save_batch_size=save_batch_size,
-    ):
+    try:
+        for _result in iter_parsed_blocks_parallel_save(
+            input_list["found"],
+            bit_shift=bit_shift,
+            search_limit=search_limit,
+            max_workers=max_workers,
+            max_inflight=max_inflight,
+            save_flag=save,
+            parquet_path=output_path,
+            save_batch_size=save_batch_size,
+        ):
+            if plot:
+                if _result["size"] == 60:
+                    v.push_board32_point(
+                        data_queue,
+                        x=_result["timestamp"],
+                        board=_result["chip"],
+                        values_32ch=_result["samples_32ch"],
+                    )
+
+            if dump:
+                dump_range(data, _result["start"], _result["end"], width=60, summary=False)
+
+            if _i == max_blocks:
+                print(f"reached max block limit: {max_blocks}, stopping.")
+                break
+
+            _i += 1
+
+    finally:
         if plot:
-            if _result["size"] == 60:
-                _timestamp = _result["timestamp"]
-                _samples_32ch = _result["samples_32ch"]
-                _chip = _result["chip"]
+            data_queue.put(None)
+            proc.join(timeout=5)
 
-                v.push_board32_point(
-                    data_queue,
-                    x=_timestamp,
-                    board=_chip,
-                    values_32ch=_samples_32ch,
-                )
-
-        if dump:
-            dump_range(data, _result["start"], _result["end"], width=60, summary=False)
-        
-        if _i == max_blocks:
-            print(f"reached max block limit: {max_blocks}, stopping.")
-            break
-
-        _i += 1
-
-    if plot:
-        data_queue.put(None)
+            if proc.is_alive():
+                proc.terminate()
+                proc.join()
 
 
 if __name__ == '__main__':

@@ -10,11 +10,15 @@ import click
 import sys
 import pathlib
 from samidare_lib.core.prm_loader import check_input_file, get_fileinfo
+from samidare_lib.core.pixi_spark import configure_spark_env_from_pixi
 
 _this_file_path = pathlib.Path(__file__).parent
 sys.path.append(str(_this_file_path.parent.parent.parent / "src"))
 
-def get_spark_session(app_name="samidare-pulse-finder"):
+def get_spark_session(app_name="samidare-pulse-finder", pixi_spark=True):
+    if pixi_spark:
+        configure_spark_env_from_pixi()
+
     spark = (
         SparkSession.builder
         .master("local[*]")

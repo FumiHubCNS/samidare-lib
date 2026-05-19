@@ -9,11 +9,18 @@ from samidare_lib.core.decode_v0 import main as decode_v0_main
 from samidare_lib.core.decode_v1 import main as decode_v1_main
 from samidare_lib.core.pulse_finder import main as pulse_finder_main
 from samidare_lib.core.event_builder import main as event_builder_main
+from samidare_lib.core.pixi_spark import configure_spark_env_from_pixi
 
 @click.group(context_settings=dict(help_option_names=["-h", "--help"]))
-def main():
+@click.option(
+    "--pixi-env/--no-pixi-env",
+    default=True,
+    help="Configure Spark environment from pixi env.",
+)
+def main(pixi_env):
     """Decoder entrypoint."""
-    pass
+    if pixi_env:
+        configure_spark_env_from_pixi()
 
 main.add_command(decode_v0_main, name="v0")
 main.add_command(decode_v1_main, name="v1")
