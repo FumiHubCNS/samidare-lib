@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.22.0"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium", auto_download=["html"])
 
 with app.setup:
@@ -12,7 +12,9 @@ with app.setup:
     import marimo_lib.util as molib
     import os
 
-    os.environ.pop("SPARK_HOME", None)
+    import pathlib
+
+    this_file_path = pathlib.Path(__file__).parent
 
 
 @app.cell(hide_code=True)
@@ -416,6 +418,11 @@ def _(hits_data, idx, tpcs):
         canvassize = [12,7],
         return_flag=True
     )
+    return
+
+
+@app.cell
+def _():
     return
 
 

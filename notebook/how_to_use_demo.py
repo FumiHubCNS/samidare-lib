@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.22.0"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium", auto_download=["html"])
 
 with app.setup:
@@ -10,6 +10,15 @@ with app.setup:
     import pathlib
 
     this_file_path = pathlib.Path(__file__).parent
+
+    import shutil
+
+    if shutil.which("pixi"):
+        runner = "pixi run python"
+    elif shutil.which("uv"):
+        runner = "uv run python"
+    else:
+        raise RuntimeError("Neither pixi nor uv was found in PATH.")
 
 
 @app.cell(hide_code=True)
@@ -50,7 +59,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("pixi run python src/samidare_lib/core/decoder.py --help"),
+        comandline_arg(f"{runner} src/samidare_lib/core/decoder.py --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -81,7 +90,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("pixi run python src/samidare_lib/core/decoder.py v1 --help"),
+        comandline_arg(f"{runner} src/samidare_lib/core/decoder.py v1 --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -125,7 +134,7 @@ def _():
 def _(binary_file_path, mo, subprocess):
     _options = "--max-workers 16 --max-blocks 50000"
     _result = subprocess.run(
-        comandline_arg(f"pixi run python src/samidare_lib/core/decoder.py v1 -f {binary_file_path} --save {_options}"),
+        comandline_arg(f"{runner} src/samidare_lib/core/decoder.py v1 -f {binary_file_path} --save {_options}"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -254,7 +263,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("pixi run python src/samidare_lib/core/decoder.py pulse --help"),
+        comandline_arg(f"{runner} src/samidare_lib/core/decoder.py pulse --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -276,7 +285,7 @@ def _(mo):
 @app.cell
 def _(binary_file_path, mo, subprocess):
     _result = subprocess.run(
-        comandline_arg(f"pixi run python src/samidare_lib/core/decoder.py pulse -f {binary_file_path} --save --start-pos 256"),
+        comandline_arg(f"{runner} src/samidare_lib/core/decoder.py pulse -f {binary_file_path} --save --start-pos 256"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -313,19 +322,26 @@ def _(mo):
 
 @app.cell
 def _(df_pulse, molib):
-    _nmax = 1000
-    _df = df_pulse.select("pulse_segment", "peak", "charge").limit(_nmax).toPandas()
+    _nmax = 10000
+    _df = (
+        df_pulse
+        .select("pulse_segment", "peak", "charge")
+        .limit(_nmax)
+        .toPandas()
+    )
 
-    _pulse = _df['pulse_segment'].to_numpy()
-    _peak = _df['peak'].to_numpy()
-    _charge = _df['charge'].to_numpy()
+    _pulse = _df["pulse_segment"].to_numpy()
+    _peak = _df["peak"].to_numpy()
+    _charge = _df["charge"].to_numpy()
 
     _px = []
     _py = []
 
-    for _i in range(_nmax):
-        _py += _pulse[_i]
-        _px += list(np.linspace(0,len(_pulse[_i])-1,len(_pulse[_i])))
+    for _p in _pulse:
+        _p = np.asarray(_p)
+
+        _py.extend(_p.tolist())
+        _px.extend(range(len(_p)))
 
     ############### plot ###############
     _fig = molib.plot.get_subplots_object(
@@ -339,23 +355,28 @@ def _(df_pulse, molib):
     molib.plot.add_sub_plot(
         _fig, 1, 1,
         data=[_px, _py],
-        axes_title=['index', 'sample'],
+        axes_title=["index", "sample"],
         func=molib.plot.go_Heatmap,
-        bins=[20,100],
-        xrange=[0,20],
-        yrange=[-100,900]
+        bins=[20, 100],
+        xrange=[0, 20],
+        yrange=[-100, 900]
     )
 
     molib.plot.add_sub_plot(
         _fig, 1, 2,
         data=[_charge, _peak],
-        axes_title=['charge', 'max sample'],
+        axes_title=["charge", "max sample"],
         func=molib.plot.go_Heatmap
     )
 
     molib.plot.align_colorbar(_fig, 20)
 
-    _fig.update_layout(height=500, width=1000, showlegend=True, title_text='Demo')
+    _fig.update_layout(
+        height=500,
+        width=1000,
+        showlegend=True,
+        title_text="Demo"
+    )
     return
 
 
@@ -407,7 +428,7 @@ def _(mo):
 @app.cell
 def _(mo, subprocess):
     _result = subprocess.run(
-        comandline_arg("pixi run python src/samidare_lib/core/decoder.py event --help"),
+        comandline_arg(f"{runner} src/samidare_lib/core/decoder.py event --help"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,
@@ -421,7 +442,7 @@ def _(mo, subprocess):
 @app.cell
 def _(binary_file_path, mo, subprocess):
     _result = subprocess.run(
-        comandline_arg(f"uv run python src/samidare_lib/core/decoder.py event -f {binary_file_path} --save --threshold 3e6"),
+        comandline_arg(f"{runner} src/samidare_lib/core/decoder.py event -f {binary_file_path} --save --threshold 3e6"),
         cwd=str(this_file_path.parent),
         check=True,
         text=True,

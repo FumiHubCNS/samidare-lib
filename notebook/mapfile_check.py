@@ -1,6 +1,6 @@
 import marimo
 
-__generated_with = "0.20.4"
+__generated_with = "0.24.2"
 app = marimo.App(width="medium", auto_download=["html"])
 
 with app.setup:
@@ -193,6 +193,11 @@ def _():
     import catm_lib as catlib
 
     catlib.readoutpad.catm.check_pad_view()
+    return
+
+
+@app.cell
+def _():
     return
 
 
