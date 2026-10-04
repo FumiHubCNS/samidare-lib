@@ -1,0 +1,22 @@
+# Hidden file
+.*
+
+# Keep hidden files related to Git
+!.gitignore
+!.github/
+
+# Python 
+__pycache__/
+*.py[cod]
+
+# Build/generated files
+result
+result-*
+build
+unused
+
+# Local configuration files
+rawdata
+output
+analysis
+*.log
